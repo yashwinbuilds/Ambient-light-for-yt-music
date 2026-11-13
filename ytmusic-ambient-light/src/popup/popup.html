@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ambient Light for YouTube Music™</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo-row">
+        <svg class="header-icon" viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+          <path d="M8 8h8a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1Zm1 2v4h6v-4H9ZM11 2h2v3h-2V2Zm0 17h2v3h-2v-3ZM2 11h3v2H2v-2Zm17 0h3v2h-3v-2ZM4.22 5.64l1.42-1.42 2.12 2.12-1.42 1.42-2.12-2.12Zm12.02 12.02 1.42-1.42 2.12 2.12-1.42 1.42-2.12-2.12Zm-12.02 0 2.12-2.12 1.42 1.42-2.12 2.12-1.42-1.42ZM16.24 6.34l2.12-2.12 1.42 1.42-2.12 2.12-1.42-1.42Z"/>
+        </svg>
+        <span class="title">Ambient Light</span>
+      </div>
+      <span class="badge">Liquid Glass</span>
+    </header>
+
+    <!-- Master Switch -->
+    <div class="card card--toggle">
+      <div class="toggle-info">
+        <span class="label">Ambient Glow</span>
+        <span class="sublabel">Full-screen reactive lighting</span>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="toggle-enabled">
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <!-- Controls Body -->
+    <div id="controls-body" class="controls-body">
+      <!-- Presets -->
+      <div class="section-title">Presets</div>
+      <div class="preset-grid">
+        <button type="button" class="preset-btn" data-preset="subtle">Subtle</button>
+        <button type="button" class="preset-btn" data-preset="balanced">Balanced</button>
+        <button type="button" class="preset-btn" data-preset="vivid">Vivid</button>
+        <button type="button" class="preset-btn" data-preset="immersive">Cinema</button>
+      </div>
+
+      <!-- Sliders -->
+      <div class="sliders-list">
+        <div class="slider-row">
+          <div class="slider-header">
+            <span>Spread</span>
+            <span class="slider-val" id="val-spread">45%</span>
+          </div>
+          <input type="range" class="range" id="range-spread" min="10" max="150" step="1">
+        </div>
+
+        <div class="slider-row">
+          <div class="slider-header">
+            <span>Blur Softness</span>
+            <span class="slider-val" id="val-blur">42%</span>
+          </div>
+          <input type="range" class="range" id="range-blur" min="15" max="80" step="1">
+        </div>
+
+        <div class="slider-row">
+          <div class="slider-header">
+            <span>Brightness</span>
+            <span class="slider-val" id="val-brightness">115%</span>
+          </div>
+          <input type="range" class="range" id="range-brightness" min="50" max="180" step="5">
+        </div>
+
+        <div class="slider-row">
+          <div class="slider-header">
+            <span>Saturation</span>
+            <span class="slider-val" id="val-saturation">135%</span>
+          </div>
+          <input type="range" class="range" id="range-saturation" min="50" max="200" step="5">
+        </div>
+
+        <div class="slider-row">
+          <div class="slider-header">
+            <span>Smoothness</span>
+            <span class="slider-val" id="val-smoothness">65%</span>
+          </div>
+          <input type="range" class="range" id="range-smoothness" min="0" max="95" step="5">
+        </div>
+      </div>
+
+      <!-- Liquid Glass Section -->
+      <div class="card card--inline" style="margin-top: 14px;">
+        <div class="toggle-info">
+          <span class="label">Liquid Glass UI</span>
+          <span class="sublabel">Optical translucent frosted surfaces</span>
+        </div>
+        <label class="switch">
+          <input type="checkbox" id="toggle-glass">
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <div class="sliders-list" style="margin-top: 8px;">
+        <div class="slider-row">
+          <div class="slider-header">
+            <span>Glass Transparency</span>
+            <span class="slider-val" id="val-opacity">32%</span>
+          </div>
+          <input type="range" class="range" id="range-opacity" min="10" max="70" step="2">
+        </div>
+
+        <div class="slider-row">
+          <div class="slider-header">
+            <span>Glass Blur Radius</span>
+            <span class="slider-val" id="val-glassblur">28px</span>
+          </div>
+          <input type="range" class="range" id="range-glassblur" min="10" max="50" step="2">
+        </div>
+      </div>
+
+      <div class="card card--inline" style="margin-top: 10px;">
+        <div class="toggle-info">
+          <span class="label">Active While Browsing</span>
+          <span class="sublabel">Glow on Home/Explore/Library</span>
+        </div>
+        <label class="switch">
+          <input type="checkbox" id="toggle-browsing">
+          <span class="slider"></span>
+        </label>
+      </div>
+
+      <!-- Feature Toggle: Letterbox Removal -->
+      <div class="card card--inline" style="margin-top: 10px;">
+        <div class="toggle-info">
+          <span class="label">Remove Black Bars</span>
+          <span class="sublabel">Clip letterbox in music videos</span>
+        </div>
+        <label class="switch">
+          <input type="checkbox" id="toggle-bars">
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Footer Status -->
+    <footer class="footer">
+      <div class="status-indicator" id="status-indicator">
+        <span class="status-dot"></span>
+        <span class="status-text" id="status-text">Active</span>
+      </div>
+      <div style="display: flex; gap: 10px;">
+        <a href="https://open.spotify.com" target="_blank" class="ytm-link">Spotify &rarr;</a>
+        <a href="https://music.youtube.com" target="_blank" class="ytm-link">YT Music &rarr;</a>
+      </div>
+    </footer>
+  </div>
+
+  <script src="../engine/presets.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

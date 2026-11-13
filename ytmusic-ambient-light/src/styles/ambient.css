@@ -1,0 +1,375 @@
+/**
+ * Ambient Light for Anything - Core Hardware-Accelerated Ambient Engine Stylesheet
+ * 3-Tier Multi-Layer Projection:
+ *   Tier 1: Full-Screen Viewport Aura (Atmospheric room wash)
+ *   Tier 2: Expansive Far Halo (Volumetric room-filling glow)
+ *   Tier 3: Near Edge Bloom (High-chroma HDR edge pop)
+ */
+
+:root {
+  --ytal-spread: 0.45;
+  --ytal-blur: 0.40;
+  --ytal-size: 450px;
+  --ytal-viewport-opacity: 0.90;
+  --ytal-glass-opacity: 0.35;
+  --ytal-glass-blur: 28px;
+}
+
+/* ==========================================================================
+   1. Universal Ambient Light Canvas Container & 3-Tier Projection
+   ========================================================================== */
+
+.ytal-music {
+  position: fixed;
+  inset: 0;
+  z-index: 0 !important;
+  overflow: hidden;
+  pointer-events: none !important;
+  visibility: hidden;
+  contain: strict;
+}
+
+.ytal-music--active {
+  visibility: visible;
+  background: #030303;
+}
+
+/* TIER 1: Full-Screen Viewport Aura
+   Stretches across all screen edges, corners, and behind sidebars */
+.ytal-music__viewport-aura {
+  position: fixed;
+  inset: -10vw -10vh;
+  width: 120vw;
+  height: 120vh;
+  pointer-events: none !important;
+  opacity: var(--ytal-viewport-opacity, 0.90);
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, filter, opacity;
+  object-fit: cover;
+  image-rendering: auto;
+  filter: blur(55px) saturate(180%) brightness(1.2);
+}
+
+/* Localized glow wrapper tracking album art/video bounding box */
+.ytal-music__glow {
+  position: absolute;
+  opacity: 0;
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+  pointer-events: none !important;
+}
+
+.ytal-music--visible .ytal-music__glow {
+  opacity: 1;
+}
+
+/* Projection Layers */
+.ytal-music__layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  will-change: transform, filter;
+  pointer-events: none !important;
+}
+
+/* TIER 2: Far Layer - Expansive volumetric room-filling halo */
+.ytal-music__layer--far {
+  opacity: 0.88;
+  transform: scale(calc(1 + var(--ytal-spread, 0.45) * 2.8));
+  filter: blur(calc(var(--ytal-size, 450px) * var(--ytal-blur, 0.40) * 0.45));
+}
+
+/* TIER 3: Near Layer - High-chroma edge bloom contouring the cover/video */
+.ytal-music__layer--near {
+  opacity: 0.95;
+  transform: scale(calc(1 + var(--ytal-spread, 0.45) * 0.6));
+  filter: blur(calc(var(--ytal-size, 450px) * var(--ytal-blur, 0.40) * 0.22));
+}
+
+/* Dynamic letterbox/pillarbox clipping on video element */
+.ytal-video-clip {
+  clip-path: var(--ytal-video-clip, inset(0% 0%));
+  transition: clip-path 0.25s ease-out;
+}
+
+/* ==========================================================================
+   2. Player Bar Quick Access Button Base
+   ========================================================================== */
+
+.ytal-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  outline: none;
+  transition: color 0.15s ease, background-color 0.15s ease, transform 0.15s ease;
+}
+
+.ytal-btn--playerbar {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  margin: 0 2px;
+  padding: 0;
+  border-radius: 50%;
+  color: #909090;
+}
+
+.ytal-btn--playerbar:hover,
+.ytal-btn--playerbar:focus-visible {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.ytal-btn--playerbar.ytal-btn--active {
+  color: #ffffff;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.5));
+}
+
+.ytal-btn--playerbar svg {
+  width: 22px;
+  height: 22px;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   3. Floating Settings Menu (Universal Clean Dark Aesthetic)
+   ========================================================================== */
+
+.ytal-menu {
+  position: fixed;
+  z-index: 999999;
+  width: 330px;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  padding: 16px;
+  border-radius: 14px;
+  background: #181818;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.88);
+  color: #f1f1f1;
+  font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 13px;
+  line-height: 1.4;
+  scrollbar-width: thin;
+  scrollbar-color: #3e3e3e transparent;
+}
+
+.ytal-menu[hidden] {
+  display: none;
+}
+
+.ytal-menu__header {
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.ytal-menu__title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ytal-menu__title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.ytal-menu__badge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #aaa;
+}
+
+.ytal-menu__subtitle {
+  font-size: 12px;
+  color: #999999;
+  margin-top: 2px;
+}
+
+.ytal-menu__section {
+  margin-bottom: 14px;
+}
+
+.ytal-menu__section--toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.ytal-menu__section--inline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.ytal-menu__toggle-label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+.ytal-menu__hint {
+  font-size: 11px;
+  color: #888888;
+  font-weight: normal;
+  margin-top: 1px;
+}
+
+.ytal-menu__label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #aaaaaa;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+/* Preset Buttons Grid */
+.ytal-preset-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.ytal-preset-btn {
+  padding: 6px 0;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #242424;
+  color: #cccccc;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: center;
+}
+
+.ytal-preset-btn:hover {
+  background: #333333;
+  color: #ffffff;
+}
+
+.ytal-preset-btn--active {
+  background: #ffffff;
+  color: #111111;
+  border-color: #ffffff;
+  font-weight: 600;
+}
+
+/* Sliders */
+.ytal-slider-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ytal-slider-item__header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 500;
+  color: #dddddd;
+  margin-bottom: 4px;
+}
+
+.ytal-slider-item__val {
+  color: #888888;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.ytal-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background: #3a3a3a;
+  outline: none;
+  cursor: pointer;
+  margin: 4px 0;
+}
+
+.ytal-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.ytal-range::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+.ytal-controls-group--disabled {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* Toggle Switch */
+.ytal-switch {
+  position: relative;
+  display: inline-block;
+  width: 36px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.ytal-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.ytal-switch__slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: #4a4a4a;
+  border-radius: 20px;
+  transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ytal-switch__slider::before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 3px;
+  bottom: 3px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.ytal-switch input:checked + .ytal-switch__slider {
+  background-color: #ffffff;
+}
+
+.ytal-switch input:checked + .ytal-switch__slider::before {
+  transform: translateX(16px);
+  background-color: #111111;
+}

@@ -1,0 +1,120 @@
+/**
+ * Ambient Light for Anything - Spotify Web Player Stylesheet
+ * Hardware-accelerated dynamic Ambilight & Liquid Glass for open.spotify.com
+ */
+
+/* Spotify ambient container */
+body.ytal-spotify-active .ytal-music {
+  position: fixed;
+  inset: 0;
+  z-index: 0 !important;
+  overflow: hidden;
+  pointer-events: none !important;
+  visibility: hidden;
+  contain: strict;
+}
+
+body.ytal-spotify-active .ytal-music--active {
+  visibility: visible;
+  background: #080808;
+}
+
+/* Translucent container overrides for Spotify Web */
+body.ytal-spotify-active #main,
+body.ytal-spotify-active .Root,
+body.ytal-spotify-active div[data-testid="root"],
+body.ytal-spotify-active .main-view-container,
+body.ytal-spotify-active main[role="main"],
+body.ytal-spotify-active div[data-testid="background"],
+body.ytal-spotify-active .main-view-container__scroll-node-child,
+body.ytal-spotify-active div.Root__top-container,
+body.ytal-spotify-active .under-main-view {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Spotify Bottom Player Bar - Liquid Glass */
+body.ytal-spotify-active footer[data-testid="now-playing-bar"],
+body.ytal-spotify-active div.Root__now-playing-bar,
+body.ytal-spotify-active footer.Root__now-playing-bar {
+  background: rgba(14, 14, 14, var(--ytal-glass-opacity, 0.35)) !important;
+  backdrop-filter: blur(calc(var(--ytal-glass-blur, 28px) * 1.1)) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(calc(var(--ytal-glass-blur, 28px) * 1.1)) saturate(160%) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Spotify Left Navigation / Library Sidebar */
+body.ytal-spotify-active nav.Root__nav-bar,
+body.ytal-spotify-active div[data-testid="left-sidebar"],
+body.ytal-spotify-active .Root__nav-bar nav,
+body.ytal-spotify-active nav[aria-label="Main"] {
+  background: rgba(16, 16, 16, calc(var(--ytal-glass-opacity, 0.35) * 0.9)) !important;
+  backdrop-filter: blur(var(--ytal-glass-blur, 28px)) saturate(150%) !important;
+  -webkit-backdrop-filter: blur(var(--ytal-glass-blur, 28px)) saturate(150%) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Spotify Top Bar */
+body.ytal-spotify-active header[data-testid="top-bar"],
+body.ytal-spotify-active .Root__top-bar {
+  background: rgba(14, 14, 14, calc(var(--ytal-glass-opacity, 0.35) * 0.8)) !important;
+  backdrop-filter: blur(var(--ytal-glass-blur, 28px)) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(var(--ytal-glass-blur, 28px)) saturate(160%) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Spotify Right Sidebar / Now Playing View */
+body.ytal-spotify-active aside.Root__right-sidebar,
+body.ytal-spotify-active aside[aria-label="Now playing view"],
+body.ytal-spotify-active div[data-testid="now-playing-view"] {
+  background: rgba(18, 18, 18, var(--ytal-glass-opacity, 0.35)) !important;
+  backdrop-filter: blur(var(--ytal-glass-blur, 28px)) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(var(--ytal-glass-blur, 28px)) saturate(160%) !important;
+  border-left: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Spotify Track Cards & Chips */
+body.ytal-spotify-active [data-testid="card-click-handler"],
+body.ytal-spotify-active div[data-testid="tracklist-row"]:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-radius: 8px !important;
+}
+
+/* Elevated Album Art in Player Bar */
+body.ytal-spotify-active [data-testid="now-playing-widget"] [data-testid="cover-art-image"] {
+  border-radius: 8px !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6) !important;
+}
+
+/* Spotify Quick Access Button in player bar */
+.ytal-btn--spotify {
+  width: 32px;
+  height: 32px;
+  margin: 0 4px;
+  border-radius: 50%;
+  color: #b3b3b3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.ytal-btn--spotify:hover {
+  color: #ffffff;
+  transform: scale(1.1);
+}
+
+.ytal-btn--spotify.ytal-btn--active {
+  color: #ffffff;
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.6));
+}
+
+.ytal-btn--spotify svg {
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+}

@@ -1,0 +1,214 @@
+/**
+ * Ambient Light for Anything - YouTube Music™ Stylesheet
+ * Hardware-accelerated dynamic Ambilight & Liquid Glass for music.youtube.com
+ */
+
+/* Elevate ytmusic-app above ambient light background so all page content is visible */
+ytmusic-app {
+  position: relative !important;
+  z-index: 1 !important;
+  background: transparent !important;
+}
+
+html, body {
+  background: #080808 !important;
+}
+
+/* Transparent container overrides for YouTube Music */
+body:has(> .ytal-music--active) ytmusic-app {
+  background: transparent !important;
+}
+
+/* Player Page - transparent so ambient light canvas directly behind it shines through */
+ytmusic-player-page,
+#player-page {
+  --ytmusic-player-page-background: transparent !important;
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+body.ytal-player-open ytmusic-player-page,
+body.ytal-player-open #player-page,
+body.ytal-player-open #main-panel,
+body.ytal-player-open ytmusic-player#player,
+body.ytal-player-open ytmusic-player[video-mode],
+body.ytal-player-open ytmusic-player[video-mode] #song-video,
+body.ytal-player-open ytmusic-player[video-mode] .html5-video-player,
+body.ytal-player-open ytmusic-player[video-mode] .html5-video-container {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* ==========================================================================
+   Left Navigation Bar - Clean, Transparent with Single Selected Pill
+   ========================================================================== */
+
+body.ytal-liquid-glass ytmusic-guide-renderer,
+body.ytal-liquid-glass tp-yt-app-drawer#guide,
+body.ytal-liquid-glass tp-yt-app-drawer#guide[persistent] #guide-wrapper,
+body.ytal-liquid-glass #guide-wrapper,
+body.ytal-liquid-glass #mini-guide-background,
+body.ytal-liquid-glass ytmusic-guide-section-renderer,
+body:has(> .ytal-music--active) ytmusic-guide-renderer,
+body:has(> .ytal-music--active) tp-yt-app-drawer#guide,
+body:has(> .ytal-music--active) #guide-wrapper,
+body:has(> .ytal-music--active) #mini-guide-background {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: none !important;
+  border-right: none !important;
+  box-shadow: none !important;
+}
+
+/* Inactive guide items - completely transparent */
+ytmusic-guide-entry-renderer tp-yt-paper-item {
+  background: transparent !important;
+  border-radius: 8px !important;
+  transition: background-color 0.15s ease;
+}
+
+/* Strictly the active / currently selected navigation item gets the subtle translucent pill */
+ytmusic-guide-entry-renderer[active] tp-yt-paper-item,
+ytmusic-guide-entry-renderer tp-yt-paper-item.iron-selected {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-radius: 8px !important;
+}
+
+/* Hover state on guide items */
+ytmusic-guide-entry-renderer tp-yt-paper-item:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-radius: 8px !important;
+}
+
+/* ==========================================================================
+   Browse Content vs Player Page Isolation
+   ========================================================================== */
+
+/* When player page is open, hide underlying browse page so Home cards/chips do not bleed through */
+body.ytal-player-open #browse-page,
+body.ytal-player-open ytmusic-browse-response {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Guarantee that when player is NOT open, browse pages are completely visible, sharp & interactive */
+body:not(.ytal-player-open) #browse-page,
+body:not(.ytal-player-open) ytmusic-browse-response,
+body:not(.ytal-player-open) #contents.ytmusic-browse-response,
+body:not(.ytal-player-open) ytmusic-section-list-renderer,
+body:not(.ytal-player-open) #contents.ytmusic-section-list-renderer,
+body:not(.ytal-player-open) ytmusic-carousel-shelf-renderer,
+body:not(.ytal-player-open) ytmusic-grid-renderer,
+body:not(.ytal-player-open) ytmusic-item-section-renderer,
+body:not(.ytal-player-open) ytmusic-two-row-item-renderer,
+body:not(.ytal-player-open) ytmusic-responsive-list-item-renderer,
+body:not(.ytal-player-open) ytmusic-navigation-button-renderer {
+  background: transparent !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+/* Explore Category Buttons (New Releases, Charts, Moods & Genres) with subtle glass */
+body.ytal-liquid-glass ytmusic-navigation-button-renderer button,
+body.ytal-liquid-glass ytmusic-navigation-button-renderer .ytmusic-navigation-button-renderer {
+  background: rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 8px !important;
+}
+
+/* Filter Chips (Playlists, Songs, Albums, Artists, Podcasts) */
+body.ytal-liquid-glass ytmusic-chip-cloud-chip-renderer {
+  background: rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 16px !important;
+}
+
+body.ytal-liquid-glass ytmusic-chip-cloud-chip-renderer[selected] {
+  background: rgba(255, 255, 255, 0.92) !important;
+  color: #121212 !important;
+}
+
+/* Responsive list item interactive hover */
+body.ytal-liquid-glass ytmusic-responsive-list-item-renderer:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-radius: 8px !important;
+}
+
+/* ==========================================================================
+   Top Nav & Player Bar Liquid Glass
+   ========================================================================== */
+
+/* Top Navigation Bar */
+body.ytal-liquid-glass ytmusic-nav-bar,
+body.ytal-liquid-glass #nav-bar-background,
+body.ytal-liquid-glass #background.ytmusic-nav-bar {
+  background: rgba(14, 14, 14, calc(var(--ytal-glass-opacity, 0.32) * 0.85)) !important;
+  backdrop-filter: blur(var(--ytal-glass-blur, 28px)) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(var(--ytal-glass-blur, 28px)) saturate(160%) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+body.ytal-liquid-glass ytmusic-search-box {
+  background: rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.15) !important;
+  border-radius: 24px !important;
+}
+
+/* Bottom Player Bar */
+body.ytal-liquid-glass ytmusic-player-bar,
+body.ytal-liquid-glass #player-bar-background,
+body.ytal-liquid-glass ytmusic-miniplayer.ytMusicMiniPlayerHost {
+  background: rgba(14, 14, 14, var(--ytal-glass-opacity, 0.32)) !important;
+  backdrop-filter: blur(calc(var(--ytal-glass-blur, 28px) * 1.1)) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(calc(var(--ytal-glass-blur, 28px) * 1.1)) saturate(160%) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1), 0 -8px 28px rgba(0, 0, 0, 0.35) !important;
+}
+
+/* Player Page Right Side Panel ("Up Next", "Lyrics", "Related") */
+body.ytal-liquid-glass ytmusic-player-page #side-panel,
+body.ytal-liquid-glass ytmusic-player-page div.side-panel,
+body.ytal-liquid-glass ytmusic-player-page ytmusic-tab-renderer {
+  background: rgba(18, 18, 18, var(--ytal-glass-opacity, 0.32)) !important;
+  backdrop-filter: blur(var(--ytal-glass-blur, 28px)) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(var(--ytal-glass-blur, 28px)) saturate(160%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 18px !important;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.12), 0 16px 40px rgba(0, 0, 0, 0.45) !important;
+}
+
+body.ytal-liquid-glass ytmusic-player-page #side-panel #contents,
+body.ytal-liquid-glass ytmusic-player-page #side-panel ytmusic-player-queue,
+body.ytal-liquid-glass ytmusic-player-page #side-panel ytmusic-player-queue-item {
+  background: transparent !important;
+}
+
+body.ytal-liquid-glass ytmusic-player-queue-item:hover,
+body.ytal-liquid-glass ytmusic-player-queue-item[selected] {
+  background: rgba(255, 255, 255, 0.09) !important;
+  border-radius: 8px !important;
+}
+
+/* Album Art Elevation */
+body:has(> .ytal-music--active) ytmusic-player #song-image,
+body:has(> .ytal-music--active) ytmusic-player #song-image img {
+  border-radius: 14px !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7) !important;
+}
+
+/* Miniplayer Elevation */
+ytmusic-miniplayer,
+ytmusic-player.ytmusic-miniplayer {
+  border-radius: 12px !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6) !important;
+}
